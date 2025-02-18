@@ -16,8 +16,8 @@ https://raw.githubusercontent.com/42LM/capsule/main/cap.zsh
 Import (`.zshrc`)
 ```zsh
 # only load prompt if the `cap.zsh` file exists
-[ -f $HOME/.config/zsh/capsule/cap.zsh ] && \
-source $HOME/.config/zsh/capsule/cap.zsh
+[ -f "$HOME/.config/zsh/capsule/cap.zsh" ] && \
+source "$HOME/.config/zsh/capsule/cap.zsh"
 ```
 
 Default setup:
