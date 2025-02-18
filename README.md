@@ -7,7 +7,15 @@ Simple ZSH prompt with git support.
 ## Quickstart
 Install
 ```sh
-TBD
+curl --create-dirs -o ~/.config/zsh/capsule/cap.zsh \
+https://raw.githubusercontent.com/42LM/capsule/main/cap.zsh
+```
+
+Import (`.zshrc`)
+```zsh
+# only load prompt if the `bb.zsh` file exists
+[ -f $HOME/.config/zsh/capsule/cap.zsh ] && \
+source $HOME/.config/zsh/capsule/cap.zsh
 ```
 
 Default setup:
