@@ -30,6 +30,7 @@
 ! [ -v CAPSULE_PROMPT_DIR_BG ] && CAPSULE_PROMPT_DIR_BG="4" # blue
 ! [ -v CAPSULE_PROMPT_TIMER_FG ] && CAPSULE_PROMPT_TIMER_FG="0" # black
 ! [ -v CAPSULE_PROMPT_TIMER_BG ] && CAPSULE_PROMPT_TIMER_BG="6" # cyan
+! [ -v CAPSULE_PROMPT_DELIMTER_FG ] && CAPSULE_PROMPT_DELIMTER_FG="12" # grey
 
 ! [ -v CAPSULE_PROMPT_STAGED_SIGN ] && CAPSULE_PROMPT_STAGED_SIGN="*"
 ! [ -v CAPSULE_PROMPT_UNSTAGED_SIGN ] && CAPSULE_PROMPT_UNSTAGED_SIGN="+"
@@ -116,7 +117,7 @@ prompt_precmd() {
     # defaults to `false`
     elapsedtime=""
     if ${CAPSULE_PROMPT_TIMER}; then
-      elapsedtime="%(?.%F{${CAPSULE_PROMPT_TIMER_BG}}%K{${CAPSULE_PROMPT_TIMER_BG}}%F{${CAPSULE_PROMPT_TIMER_FG}}${CAPSULE_PROMPT_TIMER_SIGN}${elapsed}s%f%F{${CAPSULE_PROMPT_TIMER_BG}}%k%f.%F{red}%K{red}%F{yellow} ${elapsed}s%f%F{red}%k%f)${CAPSULE_PROMPT_DELIMTER}"
+      elapsedtime="%(?.%F{${CAPSULE_PROMPT_TIMER_BG}}%K{${CAPSULE_PROMPT_TIMER_BG}}%F{${CAPSULE_PROMPT_TIMER_FG}}${CAPSULE_PROMPT_TIMER_SIGN}${elapsed}s%f%F{${CAPSULE_PROMPT_TIMER_BG}}%k%f.%F{red}%K{red}%F{yellow} ${elapsed}s%f%F{red}%k%f)%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f"
     fi
     dir="%F{${CAPSULE_PROMPT_DIR_BG}}%K{${CAPSULE_PROMPT_DIR_BG}}%F{${CAPSULE_PROMPT_DIR_FG}}%(3~|../%2~|%~)%f%F{${CAPSULE_PROMPT_DIR_BG}}%k%f"
     successfulcommand="%(?.%F{2}${CAPSULE_PROMPT_SIGN}.%F{1}${CAPSULE_PROMPT_SIGN})%f" # green OK / red FAILURE
@@ -125,7 +126,7 @@ prompt_precmd() {
     if [[ -z ${vcs_info_msg_0_} ]]; then
         PS1=$'\n''${elapsedtime}${dir}'$'\n''${successfulcommand} '
     else
-        PS1=$'\n''${elapsedtime}${dir}${CAPSULE_PROMPT_DELIMTER}${vcs_info_msg_0_}%k'$'\n''${successfulcommand} '
+        PS1=$'\n''${elapsedtime}${dir}%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f${vcs_info_msg_0_}%k'$'\n''${successfulcommand} '
     fi
 }
 add-zsh-hook precmd prompt_precmd
@@ -197,7 +198,7 @@ zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PRO
 zstyle ':vcs_info:git*' patch-format "%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B%n/%c %p%%b%k%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%f%k" # <- the space here is for a possible (±1≡7) after the rebase/merge information
 # zstyle ':vcs_info:git*' nopatch-format ""
 #
-zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}󰘬 %B%b%%b%F{12}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
+zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}󰘬 %B%b%%b%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
 
 ### ORDER HERE MATTERS
 

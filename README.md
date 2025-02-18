@@ -40,6 +40,7 @@ CAPSULE_PROMPT_DIR_FG="0"                # black
 CAPSULE_PROMPT_DIR_BG="4"                # blue
 CAPSULE_PROMPT_TIMER_FG="0"              # black
 CAPSULE_PROMPT_TIMER_BG="6"              # cyan
+CAPSULE_PROMPT_DELIMTER_FG="12"          # grey
 
 CAPSULE_PROMPT_STAGED_SIGN="*"
 CAPSULE_PROMPT_UNSTAGED_SIGN="+"
