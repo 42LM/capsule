@@ -12,7 +12,7 @@
 ! [ -v CAPSULE_PROMPT_PROJECTS_PATH ] && CAPSULE_PROMPT_PROJECTS_PATH="${HOME}/code"
 # disable checking only in the subtree of CAPSULE_PROMPT_PROJECTS_PATH
 # by setting CAPSULE_PROMPT_PROJECTS to false
-! [ -v CAPSULE_PROMPT_PROJECTS ] && CAPSULE_PROMPT_PROJECTS=true
+! [ -v CAPSULE_PROMPT_PROJECTS ] && CAPSULE_PROMPT_PROJECTS=false
 # show elapsed time (first bubble)
 ! [ -v CAPSULE_PROMPT_TIMER ] && CAPSULE_PROMPT_TIMER=false
 
@@ -85,14 +85,17 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
     # If we got to this point, running vcs_info was not forced, so now we
     # default to not running it and selectively choose when we want to run
     # it (ret=0 means run it, ret=1 means don't).
-    ret=1
+    # ret=1
     # If a git command was run then run vcs_info as the status might
     # need to be updated.
-    case "$(fc -ln $((HISTCMD-1)))" in
-        git*)
-            ret=0
-            ;;
-    esac
+    #
+    # FIXME: i want to update also when no git command was executed!?
+    #
+    # case "$(fc -ln $((HISTCMD-1)))" in
+    #     git*)
+    #         ret=0
+    #         ;;
+    # esac
 }
 
 function preexec() {
@@ -195,18 +198,19 @@ zstyle ':vcs_info:git*' unstagedstr "${CAPSULE_PROMPT_UNSTAGED_SIGN}"
 
 zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B󰘬 %b%f%k"
 
-zstyle ':vcs_info:git*' patch-format "%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B%n/%c %p%%b%k%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%f%k" # <- the space here is for a possible (±1≡7) after the rebase/merge information
+zstyle ':vcs_info:git*' patch-format "%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B%n/%c %p%%b%k%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%f%k"
 # zstyle ':vcs_info:git*' nopatch-format ""
-#
+
 zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}󰘬 %B%b%%b%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
 
 ### ORDER HERE MATTERS
 
-if [[ -n ${CAPSULE_PROMPT_GIT_TAG_FG} ]]; then
+# if ${whatever}; then
     zstyle ':vcs_info:git*+set-message:*' hooks git-st git-count git-tag git-stash git-branch
-else
-    zstyle ':vcs_info:git*+set-message:*' hooks git-st git-count git-branch git-stash
-fi
+# TODO: possibility to disable tag?
+# else
+#     zstyle ':vcs_info:git*+set-message:*' hooks git-st git-count git-branch git-stash
+# fi
 
 # for debug purposes activate this instead: check out the keys of the hook_com var
 # zstyle ':vcs_info:git*+set-message:*' hooks git-st git-count git-tag git-branch git-stash show-hook-keys
