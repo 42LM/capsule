@@ -33,6 +33,8 @@
 ! [ -v CAPSULE_PROMPT_DELIMTER_FG ] && CAPSULE_PROMPT_DELIMTER_FG="12" # grey
 
 ! [ -v CAPSULE_PROMPT_STAGED_SIGN ] && CAPSULE_PROMPT_STAGED_SIGN="*"
+! [ -v CAPSULE_PROMPT_GIT_SIGN ] && CAPSULE_PROMPT_GIT_SIGN="󰘬 "
+! [ -v CAPSULE_PROMPT_GIT_TAG_SIGN ] && CAPSULE_PROMPT_GIT_TAG_SIGN="󱈤 "
 ! [ -v CAPSULE_PROMPT_UNSTAGED_SIGN ] && CAPSULE_PROMPT_UNSTAGED_SIGN="+"
 ! [ -v CAPSULE_PROMPT_TIMER_SIGN ] && CAPSULE_PROMPT_TIMER_SIGN=" "
 ! [ -v CAPSULE_PROMPT_DELIMTER ] && CAPSULE_PROMPT_DELIMTER=""
@@ -55,19 +57,7 @@ setopt promptsubst
 # speed reasons. If set to a non empty value vcs_info is run.
 FORCE_RUN_VCS_INFO=1
 
-# Only run vcs_info when necessary to speed up the prompt and make using
-# check-for-changes bearable in bigger repositories. This setup was originally
-# inspired by Bart Trojanowski
-# (http://jukie.net/~bart/blog/pimping-out-zsh-prompt).
-# Furthermore tweaked again by Seth House and Simon Ruderich
-# (https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples)
-#
-# This setup is by no means perfect. It can only detect changes done
-# through the VCS's commands run by the current shell. If you use your
-# editor to commit changes to the VCS or if you run them in another shell
-# this setup won't detect them. To fix this just run "cd ." which causes
-# vcs_info to run and update the information. If you use aliases to run
-# the VCS commands update the case check below.
+# Only run VCS when vcs is git.
 zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 +vi-pre-get-data() {
     # Only Git and Mercurial support need caching.
@@ -81,21 +71,6 @@ zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
         FORCE_RUN_VCS_INFO=
         return
     fi
-
-    # If we got to this point, running vcs_info was not forced, so now we
-    # default to not running it and selectively choose when we want to run
-    # it (ret=0 means run it, ret=1 means don't).
-    # ret=1
-    # If a git command was run then run vcs_info as the status might
-    # need to be updated.
-    #
-    # FIXME: i want to update also when no git command was executed!?
-    #
-    # case "$(fc -ln $((HISTCMD-1)))" in
-    #     git*)
-    #         ret=0
-    #         ;;
-    # esac
 }
 
 function preexec() {
@@ -196,12 +171,12 @@ estyle-cfc() {
 zstyle ':vcs_info:git*' stagedstr "${CAPSULE_PROMPT_STAGED_SIGN}"
 zstyle ':vcs_info:git*' unstagedstr "${CAPSULE_PROMPT_UNSTAGED_SIGN}"
 
-zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B󰘬 %b%f%k"
+zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B${${CAPSULE_PROMPT_GIT_SIGN}}%b%f%k"
 
 zstyle ':vcs_info:git*' patch-format "%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B%n/%c %p%%b%k%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%f%k"
 # zstyle ':vcs_info:git*' nopatch-format ""
 
-zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}󰘬 %B%b%%b%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
+zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}${${CAPSULE_PROMPT_GIT_SIGN}}%B%b%%b%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
 
 ### ORDER HERE MATTERS
 
@@ -264,7 +239,7 @@ zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSU
 +vi-git-tag(){
     local tag=$(git name-rev --name-only --no-undefined --always HEAD)
     if [[ -n ${tag} ]] && [[ ${tag} =~ [0-9] ]] && [[ ${tag[@]:0:4} == "tags" ]]; then
-        hook_com[branch]+=" %F{${CAPSULE_PROMPT_GIT_TAG_FG}} ${tag[6, -1]}%f"
+        hook_com[branch]+=" %F{${CAPSULE_PROMPT_GIT_TAG_FG}}${${CAPSULE_PROMPT_GIT_TAG_SIGN}}${tag[6, -1]}%f"
     else
         # due to unexpected behaviour when not finding a tag
         # the hook_com branch will be set to empty string value
