@@ -25,7 +25,7 @@
 ! [ -v CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG ] && CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG="3" # yellow
 ! [ -v CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG ] && CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG="9" # orange
 ! [ -v CAPSULE_PROMPT_GIT_DIRTY_FG ] && CAPSULE_PROMPT_GIT_DIRTY_FG="3" # yellow
-! [ -v CAPSULE_PROMPT_GIT_DIRTY_SLANTS ] && CAPSULE_PROMPT_GIT_DIRTY_SLANTS="3" # yellow
+! [ -v CAPSULE_PROMPT_GIT_DIRTY_SLANTS ] && CAPSULE_PROMPT_GIT_DIRTY_SLANTS="" # not set
 ! [ -v CAPSULE_PROMPT_GIT_DIRTY_BG ] && CAPSULE_PROMPT_GIT_DIRTY_BG="1" # red
 ! [ -v CAPSULE_PROMPT_DIR_FG ] && CAPSULE_PROMPT_DIR_FG="0" # black
 ! [ -v CAPSULE_PROMPT_DIR_BG ] && CAPSULE_PROMPT_DIR_BG="4" # blue
@@ -172,12 +172,12 @@ estyle-cfc() {
 zstyle ':vcs_info:git*' stagedstr "${CAPSULE_PROMPT_STAGED_SIGN}"
 zstyle ':vcs_info:git*' unstagedstr "${CAPSULE_PROMPT_UNSTAGED_SIGN}"
 
-zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B${${CAPSULE_PROMPT_GIT_SIGN}}%b%f%k"
+zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B${CAPSULE_PROMPT_GIT_SIGN}%b%f%k"
 
 zstyle ':vcs_info:git*' patch-format "%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B%n/%c %p%%b%k%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%f%k"
 # zstyle ':vcs_info:git*' nopatch-format ""
 
-zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}${${CAPSULE_PROMPT_GIT_SIGN}}%B%b%%b%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
+zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}${CAPSULE_PROMPT_GIT_SIGN}%B%b%%b%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%F{${CAPSULE_PROMPT_GIT_ACTION_FG}}%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B󱞭 %a%%b %m%f%k"
 
 ### ORDER HERE MATTERS
 
@@ -216,10 +216,15 @@ zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSU
 # Make sure you have added staged to your 'formats':  %c and %u
 # zstyle ':vcs_info:git*+set-message:*' hooks git-branch
 +vi-git-branch(){
+    slants="%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}"
+    if [[ -n $CAPSULE_PROMPT_GIT_DIRTY_SLANTS ]]; then
+        slants="%F{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}"
+    fi
+
     if [[ ${hook_com[staged]} != '' ]] ||
         [[ ${hook_com[unstaged]} != '' ]]; then
         if [[ ${hook_com[misc]} != '' ]] && [[ ${hook_com[action]} == '' ]]; then
-            hook_com[branch]+="%b%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG}}${hook_com[misc]}%F{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
+          hook_com[branch]+="%b%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG}}${hook_com[misc]}${slants}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
         else
             hook_com[branch]+="%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
         fi
@@ -240,7 +245,7 @@ zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSU
 +vi-git-tag(){
     local tag=$(git name-rev --name-only --no-undefined --always HEAD)
     if [[ -n ${tag} ]] && [[ ${tag} =~ [0-9] ]] && [[ ${tag[@]:0:4} == "tags" ]]; then
-        hook_com[branch]+=" %F{${CAPSULE_PROMPT_GIT_TAG_FG}}${${CAPSULE_PROMPT_GIT_TAG_SIGN}}${tag[6, -1]}%f"
+        hook_com[branch]+=" %F{${CAPSULE_PROMPT_GIT_TAG_FG}}${CAPSULE_PROMPT_GIT_TAG_SIGN}${tag[6, -1]}%f"
     else
         # due to unexpected behaviour when not finding a tag
         # the hook_com branch will be set to empty string value

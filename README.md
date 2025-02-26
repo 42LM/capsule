@@ -42,6 +42,8 @@ export CAPSULE_PROMPT_TIMER_FG="0"              # black
 export CAPSULE_PROMPT_TIMER_BG="6"              # cyan
 export CAPSULE_PROMPT_DELIMTER_FG="12"          # grey
 
+CAPSULE_PROMPT_GIT_DIRTY_SLANTS=""              # (optional [also activates double slants])
+
 export CAPSULE_PROMPT_GIT_SIGN="󰘬 "
 export CAPSULE_PROMPT_GIT_TAG_SIGN="󱈤 "
 export CAPSULE_PROMPT_STAGED_SIGN="*"
