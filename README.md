@@ -22,8 +22,6 @@ source "$HOME/.config/zsh/capsule/cap.zsh"
 
 Default setup:
 ```sh
-export CAPSULE_PROMPT_PROJECTS_PATH="${HOME}/code"
-export CAPSULE_PROMPT_PROJECTS=false
 export CAPSULE_PROMPT_TIMER=false
 
 export CAPSULE_PROMPT_GIT_AHEAD_BEHIND_FG="0"   # black

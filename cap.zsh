@@ -9,10 +9,6 @@
 #   https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
 
 ## Defining variables
-! [ -v CAPSULE_PROMPT_PROJECTS_PATH ] && CAPSULE_PROMPT_PROJECTS_PATH="${HOME}/code"
-# disable checking only in the subtree of CAPSULE_PROMPT_PROJECTS_PATH
-# by setting CAPSULE_PROMPT_PROJECTS to false
-! [ -v CAPSULE_PROMPT_PROJECTS ] && CAPSULE_PROMPT_PROJECTS=false
 # show elapsed time (first bubble)
 ! [ -v CAPSULE_PROMPT_TIMER ] && CAPSULE_PROMPT_TIMER=false
 
@@ -54,24 +50,11 @@ autoload -Uz add-zsh-hook
 # similar. Other ways of using the information are described above.
 setopt promptsubst
 
-# Default to running vcs_info. If possible we prevent running it later for
-# speed reasons. If set to a non empty value vcs_info is run.
-FORCE_RUN_VCS_INFO=1
-
 # Only run VCS when vcs is git.
 zstyle ':vcs_info:*+pre-get-data:*' hooks pre-get-data
 +vi-pre-get-data() {
-    # Only Git and Mercurial support need caching.
-    # For simplicity only Git support for caching is enabled.
     # Abort if any other VCS except Git is used.
     [[ "$vcs" != git ]] && return
-
-    # If the shell just started up or we changed directories (or for other
-    # custom reasons) we must run vcs_info.
-    if [[ -n $FORCE_RUN_VCS_INFO ]]; then
-        FORCE_RUN_VCS_INFO=
-        return
-    fi
 }
 
 function preexec() {
@@ -118,37 +101,9 @@ add-zsh-hook chpwd prompt_chpwd
 
 ############################################################################## }}}
 
-### check-for-changes just in some places #################################### {{{
+### check-for-changes #################################### {{{
 
-# For more information about the method of enabling `check-for-changes` only in a certain subtree:
-#
-# https://github.com/zsh-users/zsh/blob/c006d7609703afcfb2162c36d4f745125df45879/Misc/vcs_info-examples#L72-L105
-#
-# only enable the `check-for-changes` in `CAPSULE_PROMPT_PROJECTS_PATH`
-# when `CAPSULE_PROMPT_PROJECTS` is set to true
-if ${CAPSULE_PROMPT_PROJECTS}; then
-    zstyle -e ':vcs_info:git:*' \
-        check-for-changes 'estyle-cfc && reply=( true ) || reply=( false )'
-else
-    # activate checking for changes in general
-    # using `check-for-staged-changes` is faster here
-    # https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information:~:text=disabled%20by%20default.-,check%2Dfor%2Dstaged%2Dchanges,-This%20style%20is
-    zstyle ':vcs_info:git:*' check-for-changes true
-fi
-
-estyle-cfc() {
-    local d
-    local -a cfc_dirs
-    cfc_dirs=(
-        ${CAPSULE_PROMPT_PROJECTS_PATH}/*(/)
-    )
-
-    for d in ${cfc_dirs}; do
-        d=${d%/##}
-        [[ $PWD == $d(|/*) ]] && return 0
-    done
-    return 1
-}
+zstyle ':vcs_info:git:*' check-for-changes true
 
 ############################################################################## }}}
 
