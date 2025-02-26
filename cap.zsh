@@ -25,6 +25,7 @@
 ! [ -v CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG ] && CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG="3" # yellow
 ! [ -v CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG ] && CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG="9" # orange
 ! [ -v CAPSULE_PROMPT_GIT_DIRTY_FG ] && CAPSULE_PROMPT_GIT_DIRTY_FG="3" # yellow
+! [ -v CAPSULE_PROMPT_GIT_DIRTY_SLANTS ] && CAPSULE_PROMPT_GIT_DIRTY_SLANTS="3" # yellow
 ! [ -v CAPSULE_PROMPT_GIT_DIRTY_BG ] && CAPSULE_PROMPT_GIT_DIRTY_BG="1" # red
 ! [ -v CAPSULE_PROMPT_DIR_FG ] && CAPSULE_PROMPT_DIR_FG="0" # black
 ! [ -v CAPSULE_PROMPT_DIR_BG ] && CAPSULE_PROMPT_DIR_BG="4" # blue
@@ -218,9 +219,9 @@ zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSU
     if [[ ${hook_com[staged]} != '' ]] ||
         [[ ${hook_com[unstaged]} != '' ]]; then
         if [[ ${hook_com[misc]} != '' ]] && [[ ${hook_com[action]} == '' ]]; then
-            hook_com[branch]+="%b%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG}}${hook_com[misc]}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
+            hook_com[branch]+="%b%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG}}${hook_com[misc]}%F{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
         else
-            hook_com[branch]+="%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
+            hook_com[branch]+="%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}%B${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
         fi
     else
         if [[ ${hook_com[misc]} != '' ]] && [[ ${hook_com[action]} == '' ]]; then
