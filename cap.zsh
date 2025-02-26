@@ -35,7 +35,7 @@
 ! [ -v CAPSULE_PROMPT_UNSTAGED_SIGN ] && CAPSULE_PROMPT_UNSTAGED_SIGN="+"
 ! [ -v CAPSULE_PROMPT_TIMER_SIGN ] && CAPSULE_PROMPT_TIMER_SIGN="󱎫 "
 ! [ -v CAPSULE_PROMPT_DELIMTER ] && CAPSULE_PROMPT_DELIMTER=""
-! [ -v CAPSULE_PROMPT_SIGN ] && CAPSULE_PROMPT_SIGN="󱞩"
+! [ -v CAPSULE_PROMPT_SIGN ] && CAPSULE_PROMPT_SIGN="󱞩 "
 
 ## vim:ft=zsh
 
@@ -79,16 +79,16 @@ prompt_precmd() {
     # defaults to `false`
     elapsedtime=""
     if ${CAPSULE_PROMPT_TIMER}; then
-      elapsedtime="%(?.%F{${CAPSULE_PROMPT_TIMER_BG}}%K{${CAPSULE_PROMPT_TIMER_BG}}%F{${CAPSULE_PROMPT_TIMER_FG}}${CAPSULE_PROMPT_TIMER_SIGN}${elapsed}s%f%F{${CAPSULE_PROMPT_TIMER_BG}}%k%f.%F{red}%K{red}%F{yellow} ${elapsed}s%f%F{red}%k%f)%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f"
+      elapsedtime="%F{${CAPSULE_PROMPT_TIMER_BG}}%K{${CAPSULE_PROMPT_TIMER_BG}}%F{${CAPSULE_PROMPT_TIMER_FG}}${CAPSULE_PROMPT_TIMER_SIGN}${elapsed}s%f%F{${CAPSULE_PROMPT_TIMER_BG}}%k%f%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f"
     fi
     dir="%F{${CAPSULE_PROMPT_DIR_BG}}%K{${CAPSULE_PROMPT_DIR_BG}}%F{${CAPSULE_PROMPT_DIR_FG}}%(3~|../%2~|%~)%f%F{${CAPSULE_PROMPT_DIR_BG}}%k%f"
     successfulcommand="%(?.%F{2}${CAPSULE_PROMPT_SIGN}.%F{1}${CAPSULE_PROMPT_SIGN})%f" # green OK / red FAILURE
 
     # Only populate PS1 with vcs_info when the vcs_info_msg'es length is not zero
     if [[ -z ${vcs_info_msg_0_} ]]; then
-        PS1=$'\n''${elapsedtime}${dir}'$'\n''${successfulcommand} '
+        PS1=$'\n''${elapsedtime}${dir}'$'\n''${successfulcommand}'
     else
-        PS1=$'\n''${elapsedtime}${dir}%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f${vcs_info_msg_0_}%k'$'\n''${successfulcommand} '
+        PS1=$'\n''${elapsedtime}${dir}%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f${vcs_info_msg_0_}%k'$'\n''${successfulcommand}'
     fi
 }
 add-zsh-hook precmd prompt_precmd
