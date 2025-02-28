@@ -166,14 +166,19 @@ zstyle ':vcs_info:git*' actionformats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSU
 # Make sure you have added staged to your 'formats':  %c and %u
 # zstyle ':vcs_info:git*+set-message:*' hooks git-branch
 +vi-git-branch(){
-    slants="%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}"
+    slants="%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}"
+    slants_default=true
     if [[ -n $CAPSULE_PROMPT_GIT_DIRTY_SLANTS ]]; then
         slants="%F{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_SLANTS}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}"
+        slants_default=false
     fi
 
     if [[ ${hook_com[staged]} != '' ]] ||
         [[ ${hook_com[unstaged]} != '' ]]; then
         if [[ ${hook_com[misc]} != '' ]] && [[ ${hook_com[action]} == '' ]]; then
+          if $slants_default; then
+              slants="%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}"
+          fi
           hook_com[branch]+="%b%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%K{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG}}%F{${CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG}}${hook_com[misc]}${slants}%B%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
         else
             hook_com[branch]+="%B%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}${slants}%B%K{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%F{${CAPSULE_PROMPT_GIT_DIRTY_FG}}${hook_com[staged]}${hook_com[unstaged]}%k%f%F{${CAPSULE_PROMPT_GIT_DIRTY_BG}}%f%b"
