@@ -101,12 +101,6 @@ add-zsh-hook chpwd prompt_chpwd
 
 ############################################################################## }}}
 
-### check-for-changes #################################### {{{
-
-zstyle ':vcs_info:git:*' check-for-changes true
-
-############################################################################## }}}
-
 ### Hooks #################################################################### {{{
 
 # Debugging is off by default - of course.
@@ -121,6 +115,7 @@ zstyle ':vcs_info:git:*' check-for-changes true
 
 # Alternatively, the following would set only %c, but is faster:
 # zstyle ':vcs_info:*' check-for-changes false
+zstyle ':vcs_info:git:*' check-for-changes true
 # zstyle ':vcs_info:*' check-for-staged-changes true
 
 # This string will be used in the %c escape if there are staged changes in the repository.
