@@ -1,5 +1,6 @@
 # <img src="https://github.com/user-attachments/assets/632b79e3-bac4-47cd-81a8-63267b6e6c0b" width="65" /> capsule
-<img src="https://github.com/user-attachments/assets/3ad322d9-0a7a-42ad-b7db-15773c7fc8c9" width="900" />
+<img src="https://github.com/user-attachments/assets/3ad322d9-0a7a-42ad-b7db-15773c7fc8c9" width="900" /><br>
+<sub>Screenshot taken in <a href="https://github.com/ghostty-org/ghostty">ghostty</a></sub>
 
 _**capsule**_ is a simple _single file_ terminal prompt that is completely customizable.  
 Display is divided into capsules (`TIMER > DIR > GIT > GIT ACTION`).
