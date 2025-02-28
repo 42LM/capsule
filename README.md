@@ -20,33 +20,5 @@ Import (`.zshrc`)
 source "$HOME/.config/zsh/capsule/cap.zsh"
 ```
 
-Default setup:
-```sh
-export CAPSULE_PROMPT_TIMER=false
-
-export CAPSULE_PROMPT_GIT_AHEAD_BEHIND_FG="0"   # black
-export CAPSULE_PROMPT_GIT_ACTION_FG="3"         # yellow
-export CAPSULE_PROMPT_GIT_ACTION_BG="9"         # orange
-export CAPSULE_PROMPT_GIT_TAG_FG="1"            # red
-export CAPSULE_PROMPT_GIT_FG="1"                # red
-export CAPSULE_PROMPT_GIT_BG="3"                # yellow
-export CAPSULE_PROMPT_GIT_COUNT_ST_STASH_FG="3" # yellow
-export CAPSULE_PROMPT_GIT_COUNT_ST_STASH_BG="9" # orange
-export CAPSULE_PROMPT_GIT_DIRTY_FG="3"          # yellow
-export CAPSULE_PROMPT_GIT_DIRTY_BG="1"          # red
-export CAPSULE_PROMPT_DIR_FG="0"                # black
-export CAPSULE_PROMPT_DIR_BG="4"                # blue
-export CAPSULE_PROMPT_TIMER_FG="0"              # black
-export CAPSULE_PROMPT_TIMER_BG="6"              # cyan
-export CAPSULE_PROMPT_DELIMTER_FG="12"          # grey
-
-CAPSULE_PROMPT_GIT_DIRTY_SLANTS=""              # (optional [also activates double slants])
-
-export CAPSULE_PROMPT_GIT_SIGN="󰘬 "
-export CAPSULE_PROMPT_GIT_TAG_SIGN="󱈤 "
-export CAPSULE_PROMPT_STAGED_SIGN="*"
-export CAPSULE_PROMPT_UNSTAGED_SIGN="+"
-export CAPSULE_PROMPT_TIMER_SIGN=" "
-export CAPSULE_PROMPT_DELIMTER=""
-export CAPSULE_PROMPT_SIGN="󱞩 "
-```
+## Customize
+Check the [Customize](https://github.com/42LM/capsule/wiki/Customize-%F0%9F%AA%84) section in the wiki.
