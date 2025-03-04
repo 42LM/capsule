@@ -8,7 +8,10 @@
 # 📃 Blueprint:
 #   https://github.com/zsh-users/zsh/blob/master/Misc/vcs_info-examples
 
-## Defining variables
+## vim:ft=zsh
+
+### Defining variables (mostly colors and symbols) ######################### {{{
+
 # show elapsed time (first bubble)
 ! [ -v CAPSULE_PROMPT_TIMER ] && CAPSULE_PROMPT_TIMER=false
 
@@ -28,6 +31,8 @@
 ! [ -v CAPSULE_PROMPT_TIMER_FG ] && CAPSULE_PROMPT_TIMER_FG="0" # black
 ! [ -v CAPSULE_PROMPT_TIMER_BG ] && CAPSULE_PROMPT_TIMER_BG="6" # cyan
 ! [ -v CAPSULE_PROMPT_DELIMTER_FG ] && CAPSULE_PROMPT_DELIMTER_FG="12" # grey
+! [ -v CAPSULE_PROMPT_SUCCESS ] && CAPSULE_PROMPT_SUCCESS="2" # green
+! [ -v CAPSULE_PROMPT_FAILURE ] && CAPSULE_PROMPT_FAILURE="1" # red
 
 ! [ -v CAPSULE_PROMPT_STAGED_SIGN ] && CAPSULE_PROMPT_STAGED_SIGN="*"
 ! [ -v CAPSULE_PROMPT_GIT_SIGN ] && CAPSULE_PROMPT_GIT_SIGN="󰘬 "
@@ -37,7 +42,7 @@
 ! [ -v CAPSULE_PROMPT_DELIMTER ] && CAPSULE_PROMPT_DELIMTER=""
 ! [ -v CAPSULE_PROMPT_SIGN ] && CAPSULE_PROMPT_SIGN="󱞩 "
 
-## vim:ft=zsh
+############################################################################## }}}
 
 ### Running vcs_info ######################################################### {{{
 
@@ -82,7 +87,7 @@ prompt_precmd() {
       elapsedtime="%F{${CAPSULE_PROMPT_TIMER_BG}}%K{${CAPSULE_PROMPT_TIMER_BG}}%F{${CAPSULE_PROMPT_TIMER_FG}}${CAPSULE_PROMPT_TIMER_SIGN}${elapsed}s%f%F{${CAPSULE_PROMPT_TIMER_BG}}%k%f%F{${CAPSULE_PROMPT_DELIMTER_FG}}${CAPSULE_PROMPT_DELIMTER}%f"
     fi
     dir="%F{${CAPSULE_PROMPT_DIR_BG}}%K{${CAPSULE_PROMPT_DIR_BG}}%F{${CAPSULE_PROMPT_DIR_FG}}%(3~|../%2~|%~)%f%F{${CAPSULE_PROMPT_DIR_BG}}%k%f"
-    successfulcommand="%(?.%F{2}${CAPSULE_PROMPT_SIGN}.%F{1}${CAPSULE_PROMPT_SIGN})%f" # green OK / red FAILURE
+    successfulcommand="%(?.%F{${CAPSULE_PROMPT_SUCCESS}}${CAPSULE_PROMPT_SIGN}.%F{${CAPSULE_PROMPT_FAILURE}}${CAPSULE_PROMPT_SIGN})%f" # green OK / red FAILURE
 
     # Only populate PS1 with vcs_info when the vcs_info_msg'es length is not zero
     if [[ -z ${vcs_info_msg_0_} ]]; then
