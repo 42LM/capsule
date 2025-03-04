@@ -19,6 +19,9 @@ Import (`.zshrc`)
 source "$HOME/.config/zsh/capsule/cap.zsh"
 ```
 
+## Troubleshoot
+Check the [Troubleshoot](https://github.com/42LM/capsule/wiki/Troubleshoot) section in the wiki.
+
 ## Customize
 Check the [Customize](https://github.com/42LM/capsule/wiki/Customize-%F0%9F%AA%84) section in the wiki.
 
