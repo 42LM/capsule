@@ -127,7 +127,7 @@ zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git*' stagedstr "${CAPSULE_PROMPT_STAGED_SIGN}"
 zstyle ':vcs_info:git*' unstagedstr "${CAPSULE_PROMPT_UNSTAGED_SIGN}"
 
-zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B${CAPSULE_PROMPT_GIT_SIGN}%b%f%k"
+zstyle ':vcs_info:git*' formats "%F{${CAPSULE_PROMPT_GIT_BG}}%F{${CAPSULE_PROMPT_GIT_FG}}%K{${CAPSULE_PROMPT_GIT_BG}}%B${CAPSULE_PROMPT_GIT_SIGN}%b%f%k%%b"
 
 zstyle ':vcs_info:git*' patch-format "%K{${CAPSULE_PROMPT_GIT_ACTION_BG}}%B%n/%c %p%%b%k%F{${CAPSULE_PROMPT_GIT_ACTION_BG}}%f%k"
 # zstyle ':vcs_info:git*' nopatch-format ""
